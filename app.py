@@ -4,8 +4,8 @@ import pymongo
 import os
 from flask import Flask, render_template, url_for, send_from_directory, \
     request, session, redirect, flash
-from attendant import *
-
+from attendant import ParkingLot
+from map_my_india import request_token
 app = Flask(__name__)
 a = os.environ.get("MONGO_URI")
 b = os.environ.get("FLASK_SECRET_KEY")
@@ -36,7 +36,17 @@ def operator_signup():
     if request.method == 'GET':
         return render_template('parkmycar.html')
     else:
-        return "ok"
+        full_name = request.form["full_name"]
+        address = request.form["address"]
+        cost_per_hour = request.form["cost_per_hour"]
+        total_capacity = request.form["capacity"]
+        try:
+            latitude = 1
+            longitude = 1
+            operator = ParkingLot(full_name, latitude,
+                                  longitude, total_capacity, cost_per_hour)
+        except:
+            request_token()
 
 
 @app.route('/')

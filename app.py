@@ -12,7 +12,6 @@ from map_my_india import request_token, geocode
 app = Flask(__name__)
 # CORS(app)
 a = os.environ.get("MONGO_URI")
-print(a)
 b = os.environ.get("FLASK_SECRET_KEY")
 mongo = pymongo.MongoClient(a)
 app.secret_key = b
@@ -43,20 +42,18 @@ def operator_signup():
     if request.method == 'GET':
         return render_template('parkmycar.html')
     else:
+        print("ENTERING THE ONE")
         username = request.form["username"]
         password = request.form["password"]
         address = request.form["address"]
         cost_per_hour = request.form["cost_per_hour"]
         total_capacity = request.form["capacity"]
-
         users = mongo.parking.lot
-        users.insert({'username': 'username', 'password': 'hashpass'})
+        print(users)
         existing_user = users.find_one({'username': username})
         if existing_user is None:
             hashpass = bcrypt.hashpw(
                 password.encode('utf-8'), bcrypt.gensalt())
-            users.insert(
-                {'username': username, 'password': hashpass})
             session['username'] = username
         else:
             "User already Exists"
@@ -69,16 +66,32 @@ def operator_signup():
         operator = ParkingLot(username, latitude,
                               longitude, total_capacity, cost_per_hour)
         # print(operator)
+        print('================================================')
+        users.insert(
+            {'username': username, 'password': hashpass, 'latitude': latitude, 'longitude': longitude, 'totalSpace': total_capacity, 'available_space': total_capacity, 'cost_per_hour': cost_per_hour})
+
         global objectEndpoint
         objectEndpoint = json.dumps(operator.__dict__)
         print(objectEndpoint)
         # return objectEndpoint
-
         return "DONNEEE"
-        # except:
-        # print("FAILING")
-        # global TOKEN
-        # TOKEN = request_token()
+
+
+@app.route('/list')
+def list():
+    json_list = []
+    users = mongo.parking.lot
+    a = users.find({})
+
+    for doc in a:
+        print(type(doc))
+        del doc['_id']
+        json_list.append(doc)
+
+        # print(doc)
+    print(json_list)
+    return jsonify(json_list)
+    # print(a)
 
 
 @app.route('/address', methods=['POST'])

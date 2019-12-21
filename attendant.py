@@ -1,6 +1,6 @@
 class ParkingLot:
-    def __init__(self, name, latitude, longitude, totalSpace, costHour):
-        self.name = name
+    def __init__(self, username, latitude, longitude, totalSpace, costHour):
+        self.username = username
         self.latitude = latitude
         self.longitude = longitude
         self.totalSpace = totalSpace

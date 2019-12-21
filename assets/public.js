@@ -110,7 +110,7 @@ client.get(theurl, response => {
     // x = JSON.parse(x);
     x = JSON.stringify(x);
     // var Url = "10.104.201.255:5000/coordinates"
-    var Url = 'https://ms.goyal.club/list';
+    var Url = 'https://ms.goyal.club/coordinates';
     var xhr = new XMLHttpRequest();
     xhr.open('POST', Url, true);
     xhr.send(x);

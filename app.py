@@ -8,7 +8,7 @@ import bcrypt
 from flask import Flask, render_template, url_for, send_from_directory, \
     request, session, redirect, flash, jsonify
 from attendant import ParkingLot
-from map_my_india import request_token, geocode
+from map_my_india import geocode
 
 app = Flask(__name__)
 # CORS(app)
@@ -69,7 +69,10 @@ def operator_signup():
         # print(operator)
         print('================================================')
         users.insert(
-            {'username': username, 'password': hashpass, 'latitude': latitude, 'longitude': longitude, 'totalSpace': total_capacity, 'available_space': total_capacity, 'cost_per_hour': cost_per_hour})
+            {'username': username, 'password': hashpass, 'latitude': latitude,
+             'longitude': longitude, 'totalSpace': total_capacity,
+             'available_space': total_capacity,
+             'cost_per_hour': cost_per_hour})
 
         global objectEndpoint
         objectEndpoint = json.dumps(operator.__dict__)

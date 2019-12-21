@@ -22,7 +22,7 @@ def request_token():
 def geocode(address, token):
     # print("In GEOCODE")
     param = {"address": address}
-    header = {"Authorization": "bearer "+token}
+    header = {"Authorization": "bearer " + token}
     r = requests.get(url=GEOCODEING_API, params=param,
                      headers=header)
 

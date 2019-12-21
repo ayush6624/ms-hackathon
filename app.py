@@ -128,11 +128,6 @@ def list():
     # print(a)
 
 
-@app.route('/address', methods=['POST'])
-def address_tbf():
-    address = request["address"]
-
-
 @app.route('/')
 def index():
     '''Returns the homepage'''
@@ -170,6 +165,7 @@ def coordinates():
         s_lon = a['current_longitude']
         e_lat = a['latitude']
         e_lon = a['longitude']
+        print(e_lon)
         return "ok"
 
 

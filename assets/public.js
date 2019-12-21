@@ -20,7 +20,7 @@ var HttpClient = function() {
 };
 
 // var theurl = 'https://ms.goyal.club/list';
-var theurl = 'http://localhost:5000/list';
+var theurl = 'https://ms.goyal.club/list';
 
 var client = new HttpClient();
 client.get(theurl, response => {

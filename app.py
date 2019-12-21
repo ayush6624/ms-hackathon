@@ -4,6 +4,7 @@ import pymongo
 import os
 import json
 import bcrypt
+# import simplejson as json
 from flask import Flask, render_template, url_for, send_from_directory, \
     request, session, redirect, flash, jsonify
 from attendant import ParkingLot
@@ -84,12 +85,13 @@ def list():
     a = users.find({})
 
     for doc in a:
-        print(type(doc))
+        # print(type(doc))
         del doc['_id']
+        del doc['password']
         json_list.append(doc)
 
         # print(doc)
-    print(json_list)
+    # print(json_list)
     return jsonify(json_list)
     # print(a)
 

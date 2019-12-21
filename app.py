@@ -78,6 +78,11 @@ def operator_signup():
         return "DONNEEE"
 
 
+@app.route('/public')
+def public():
+    return render_template('public.html')
+
+
 @app.route('/list')
 def list():
     json_list = []

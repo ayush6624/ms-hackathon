@@ -8,29 +8,40 @@
     <link rel="stylesheet" type="text/css" href="" />
   </head>
   <body>
-    <h1>Signup</h1>
+    <h1>Sign Up Your Parking Lot</h1>
     <form method="post" action="/operator/signup">
-      <label for="full_name">
-        Full Name :
-        <input id="full_name" type="text" name="full_name" placeholder="write your full name here" />
-      </label>
+      <p>
+        <label for="username">Username : <input id="username" type="text" name="username" placeholder="enter Username"/></label>
+      </p>
 
-      <label for="address"
-        >Address :
-        <input id="address" type="text" name="address" placeholder="put your parking's address here" />
-      </label>
+      <p>
+        <label for="password">Password : <input id="password" type="password" name="password" placeholder="enter password"/></label>
+      </p>
 
-      <label for="cost_per_hour"
-        >Cost per Hour :
-        <input id="cost_per_hour" type="number" name="cost_per_hour" placeholder="cost per hour" />
-      </label>
+      <p>
+        <label for="address"
+          ><b>Address</b> :
+          <input id="address" type="text" name="address" placeholder="put your parking's address here" />
+        </label>
+      </p>
 
-      <label for="capacity">
-        Capacity :
-        <input id="capacity" type="number" name="capacity" placeholder="total capacity" />
-      </label>
+      <p>
+        <label for="cost_per_hour"
+          ><b>Cost per Hour</b> :
+          <input id="cost_per_hour" type="number" name="cost_per_hour" placeholder="cost per hour" />
+        </label>
+      </p>
 
-      <button>Submit</button>
+      <p>
+        <label for="capacity"
+          ><b>Capacity</b>:
+          <input id="capacity" type="number" name="capacity" placeholder="total capacity" />
+        </label>
+      </p>
+
+      <p><button>Submit</button></p>
     </form>
+
+    <a href="loginform.html">Existing User? Login here</a>
   </body>
 </html>

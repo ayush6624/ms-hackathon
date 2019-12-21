@@ -2,15 +2,22 @@ from functools import wraps
 from datetime import datetime, timedelta
 import pymongo
 import os
+import json
+import bcrypt
 from flask import Flask, render_template, url_for, send_from_directory, \
-    request, session, redirect, flash
+    request, session, redirect, flash, jsonify
 from attendant import ParkingLot
-from map_my_india import request_token
+from map_my_india import request_token, geocode
+
 app = Flask(__name__)
+# CORS(app)
 a = os.environ.get("MONGO_URI")
+print(a)
 b = os.environ.get("FLASK_SECRET_KEY")
 mongo = pymongo.MongoClient(a)
 app.secret_key = b
+TOKEN = '282cf477-f3b8-400f-918b-183fb2c54b8a'
+objectEndpoint = ''
 
 
 def login_required(f):
@@ -30,23 +37,53 @@ def secret():
     return session['email']
 
 
-@app.route('/attendant/signup', methods=['GET', 'POST'])
+@app.route('/operator/signup', methods=['GET', 'POST'])
 def operator_signup():
     '''Parking Interface'''
     if request.method == 'GET':
         return render_template('parkmycar.html')
     else:
-        full_name = request.form["full_name"]
+        username = request.form["username"]
+        password = request.form["password"]
         address = request.form["address"]
         cost_per_hour = request.form["cost_per_hour"]
         total_capacity = request.form["capacity"]
-        try:
-            latitude = 1
-            longitude = 1
-            operator = ParkingLot(full_name, latitude,
-                                  longitude, total_capacity, cost_per_hour)
-        except:
-            request_token()
+
+        users = mongo.parking.lot
+        users.insert({'username': 'username', 'password': 'hashpass'})
+        existing_user = users.find_one({'username': username})
+        if existing_user is None:
+            hashpass = bcrypt.hashpw(
+                password.encode('utf-8'), bcrypt.gensalt())
+            users.insert(
+                {'username': username, 'password': hashpass})
+            session['username'] = username
+        else:
+            "User already Exists"
+            return redirect('/operator/signup')
+        print("done")
+
+        coordinates = geocode(address, token=TOKEN)
+        latitude = coordinates[0]
+        longitude = coordinates[1]
+        operator = ParkingLot(username, latitude,
+                              longitude, total_capacity, cost_per_hour)
+        # print(operator)
+        global objectEndpoint
+        objectEndpoint = json.dumps(operator.__dict__)
+        print(objectEndpoint)
+        # return objectEndpoint
+
+        return "DONNEEE"
+        # except:
+        # print("FAILING")
+        # global TOKEN
+        # TOKEN = request_token()
+
+
+@app.route('/address', methods=['POST'])
+def address_tbf():
+    address = request["address"]
 
 
 @app.route('/')

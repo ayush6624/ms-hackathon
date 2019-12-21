@@ -19,7 +19,8 @@ var HttpClient = function() {
   };
 };
 
-var theurl = 'https://ms.goyal.club/list';
+// var theurl = 'https://ms.goyal.club/list';
+var theurl = 'http://localhost:5000/list';
 
 var client = new HttpClient();
 client.get(theurl, response => {
@@ -109,7 +110,7 @@ client.get(theurl, response => {
     // x = JSON.parse(x);
     x = JSON.stringify(x);
     // var Url = "10.104.201.255:5000/coordinates"
-    var Url = 'http://localhost:5000/coordinates';
+    var Url = 'https://ms.goyal.club/list';
     var xhr = new XMLHttpRequest();
     xhr.open('POST', Url, true);
     xhr.send(x);

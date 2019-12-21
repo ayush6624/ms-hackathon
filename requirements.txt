@@ -4,3 +4,4 @@
  dnspython
  bcrypt
  requests
+ simplejson

@@ -18,14 +18,24 @@
     <div id="map"></div>
     <button onclick="route()">Draw route</button>
     <button onclick="removeRoute()">Remove route</button>
+
+    <div style="display: none;">
+      <div id="s_lat">{{ s_lon }}</div>
+      <div id="s_lon">{{ s_lat }}</div>
+      <div id="e_lat">{{ e_lon }}</div>
+      <div id="e_lon">{{ e_lat }}</div>
+    </div>
     <script>
-      var startlat = document.querySelector('#s_lat');
-      var startlong = document.querySelector('#s_lon');
-      var destlat = document.querySelector('#e_lat');
-      var destlong = document.querySelector('#e_lon');
+      let startlat = document.querySelector('#s_lat').innerText;
+      let startlong = document.querySelector('#s_lon').innerText;
+      let destlat = document.querySelector('#e_lat').innerText;
+      let destlong = document.querySelector('#e_lon').innerText;
+      console.log(startlat);
       var map;
       var pts1;
       var poly1;
+      url = 'https://apis.mapmyindia.com/advancedmaps/v1/8sd157d6dfneikj3hbkgltzbhsdvh45o/route_adv/driving/' + startlat + ',' + startlong + ';' + destlat + ',' + destlong + '?alternatives=true&&geometries=polyline&overview=full&exclude=&steps=true&region=ind';
+      console.log(url);
       // draw map
       map = new MapmyIndia.Map('map', {
         center: [28.61, 77.23],
@@ -85,7 +95,6 @@
           success: this.scriptCallback
         });
       }
-
       // callback function
       scriptCallback = function(data) {
         pts1 = decode_path(data.routes[0].geometry);
@@ -101,11 +110,5 @@
         map.setZoom(12);
       }
     </script>
-    <div>
-      <div id="s_lat">{{ s_lat }}</div>
-      <div id="s_lon">{{ s_lon }}</div>
-      <div id="e_lat">{{ e_lat }}</div>
-      <div id="e_lon">{{ e_lon }}</div>
-    </div>
   </body>
 </html>

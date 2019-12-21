@@ -97,7 +97,7 @@ def list():
 
         # print(doc)
     # print(json_list)
-    return jsonify(json_list)
+    return jsonify(json_list), {'Access-Control-Allow-Origin': '*'}
     # print(a)
 
 

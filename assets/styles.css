@@ -124,7 +124,9 @@ body {
 }
 
 .popper {
+  opacity: 0;
   animation: pop-up 1s 1 ease-in-out forwards running;
+  animation-delay: 0.5s;
 }
 
 .info_css {
@@ -136,9 +138,12 @@ body {
   font-size: 12px;
 }
 div.header {
+  margin-top: 0;
+  margin-right: 0;
+  margin-left: 0;
   position: relative;
-  background-color: #191919;
-  color: #fff;
+  background-color: lightblue;
+  color: brown;
   line-height: 20px;
   font-size: 13px;
   vertical-align: middle;

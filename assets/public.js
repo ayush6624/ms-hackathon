@@ -24,6 +24,7 @@ var theurl = 'https://ms.goyal.club/list';
 var client = new HttpClient();
 client.get(theurl, response => {
   // alert(window.parkingLots);
+  var selectedObj = undefined;
   window.parkingLots = JSON.parse(response);
   // alert(parkingLots[0].latitude);
   // alert(window.parkingLots);
@@ -75,6 +76,7 @@ client.get(theurl, response => {
     var content = create_content('Info', 'Available space: ' + req.obj.available_space + '<br>' + 'Cost/hr: ' + req.obj.cost_per_hour);
     mk.bindPopup(content);
     mk.on('click', () => {
+      selectedObj = req.obj;
       mk.openPopup();
     });
     map.addLayer(mk);
@@ -83,6 +85,7 @@ client.get(theurl, response => {
 
   // Geo-location
   getLocation();
+  let current_latitude, current_longitude;
 
   function getLocation() {
     if (navigator.geolocation) {
@@ -91,10 +94,54 @@ client.get(theurl, response => {
       console.log('Geolocation is not supported by this browser.');
     }
   }
-
   function showPosition(position) {
+    current_latitude = position.coords.latitude;
+    current_longitude = position.coords.longitude;
     console.log('Latitude: ' + position.coords.latitude + 'Longitude: ' + position.coords.longitude);
   }
+  document.querySelector('#show-route').addEventListener('click', () => {
+    selectedObj['current_latitude'] = current_latitude;
+    selectedObj['current_longitude'] = current_longitude;
+
+    var x = selectedObj;
+    console.log(selectedObj['current_latitude']);
+
+    // x = JSON.parse(x);
+    x = JSON.stringify(x);
+    // var Url = "10.104.201.255:5000/coordinates"
+    var Url = 'http://localhost:5000/coordinates';
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', Url, true);
+    xhr.send(x);
+    xhr.onreadystatechange = processRequest;
+    function processRequest(e) {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        console.log('Done');
+      }
+    }
+  });
+  // function showRouteOnClick() {
+  //   console.log('CLICKED');
+
+  //   var x = selectedObj;
+  //   // var Url = "10.104.201.255:5000/coordinates"
+  //   var Url = 'http://localhost:5000/coordinates';
+  //   var xhr = new XMLHttpRequest();
+  //   xhr.open('POST', Url, true);
+  //   xhr.send(x);
+  //   xhr.onreadystatechange = processRequest;
+  //   function processRequest(e) {
+  //     if (xhr.readyState == 4 && xhr.status == 200) {
+  //       // alert(xhr.responseText.headers.Host);
+  //       // var response1 = JSON.parse(xhr.responseText);
+  //       // document.getElementById("origin").innerHTML = response1.origin;
+  //       // document.getElementById("url").innerHTML = response1.url;
+  //       // document.getElementById("data").innerHTML = response1.data;
+  //       console.log('Done');
+  //     }
+  //   }
+  // }
+
   // map.on("click", function (e) {
   //     var pt = e.latlng;
   //     document.getElementById('test').innerHTML = pt;

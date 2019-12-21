@@ -4,7 +4,7 @@ import pymongo
 import os
 import json
 import bcrypt
-# import simplejson as json
+import simplejson as json
 from flask import Flask, render_template, url_for, send_from_directory, \
     request, session, redirect, flash, jsonify
 from attendant import ParkingLot
@@ -18,6 +18,11 @@ mongo = pymongo.MongoClient(a)
 app.secret_key = b
 TOKEN = '282cf477-f3b8-400f-918b-183fb2c54b8a'
 objectEndpoint = ''
+
+s_lat = ''
+s_lon = ''
+e_lon = ''
+e_lat = ''
 
 
 def login_required(f):
@@ -140,12 +145,32 @@ def css(path):
     return send_from_directory('assets', path)
 
 
-@app.route('/coordinates', methods=['POST'])
+@app.route('/route')
+def route_temp():  # (s_lat=s_lat, s_lon=s_lon, e_lat=e_lat, e_lon=e_lon):
+    global s_lat
+    global s_lon
+    global e_lon
+    global e_lat
+    return render_template('routing.html', s_lat=s_lat, s_lon=s_lon, e_lat=e_lat, e_lon=e_lon)
+
+
+@app.route('/coordinates', methods=['POST', 'GET'])
 def coordinates():
     if request.method == 'POST':
-        req = request.get_json()
-        print(req)
-    return jsonify({"received": "true"})
+        a = request.get_data()
+        a = str(a)[2:-1]
+        a = (json.loads(a))
+        print(a)
+        global s_lat
+        global s_lon
+        global e_lon
+        global e_lat
+
+        s_lat = a['current_latitude']
+        s_lon = a['current_longitude']
+        e_lat = a['latitude']
+        e_lon = a['longitude']
+        return "ok"
 
 
 @app.route('/logout')

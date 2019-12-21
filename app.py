@@ -140,6 +140,14 @@ def css(path):
     return send_from_directory('assets', path)
 
 
+@app.route('/coordinates', methods=['POST'])
+def coordinates():
+    if request.method == 'POST':
+        req = request.get_json()
+        print(req)
+    return jsonify({"received": "true"})
+
+
 @app.route('/logout')
 @login_required
 def logout():

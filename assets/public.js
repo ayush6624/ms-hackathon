@@ -81,6 +81,20 @@ client.get(theurl, response => {
     return mk;
   }
 
+  // Geo-location
+  getLocation();
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      console.log('Geolocation is not supported by this browser.');
+    }
+  }
+
+  function showPosition(position) {
+    console.log('Latitude: ' + position.coords.latitude + 'Longitude: ' + position.coords.longitude);
+  }
   // map.on("click", function (e) {
   //     var pt = e.latlng;
   //     document.getElementById('test').innerHTML = pt;

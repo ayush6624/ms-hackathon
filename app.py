@@ -23,18 +23,18 @@ objectEndpoint = ''
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if 'email' in session:
+        if 'username' in session:
             return f(*args, **kwargs)
         else:
             flash("Login First!")
-            return(redirect("/accounts"))
+            return(redirect("/operator/login"))
     return wrap
 
 
 @app.route('/secret')
 @login_required
 def secret():
-    return session['email']
+    return session['username']
 
 
 @app.route('/operator/signup', methods=['GET', 'POST'])
@@ -79,6 +79,25 @@ def operator_signup():
         print(objectEndpoint)
         # return objectEndpoint
         return "DONNEEE"
+
+
+@app.route('/operator/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    else:
+        username = request.form["username"]
+        password = request.form["password"]
+        users = mongo.parking.lot
+        login_user = users.find_one({"username": username})
+
+        if login_user:
+            orig_pass = login_user['password']
+            if bcrypt.hashpw(password.encode('utf-8'), orig_pass) == orig_pass:
+                session['username'] = username
+                return redirect('/operator/dashboard')
+            return "Invalid username/password combination"
+        return "invalid username"
 
 
 @app.route('/public')
@@ -139,7 +158,7 @@ def not_found(e):
     return render_template("404.html", error='404'), 404
 
 
-@app.route('/dashboard')
+@app.route('/operator/dashboard')
 @login_required
 def dashboard():
     return render_template('dashboard.html')

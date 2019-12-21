@@ -11,13 +11,13 @@
         display: none;
       }
     </style>
-    <title>MyApp</title>
+    <title>parkMyCar</title>
   </head>
 
   <body>
     <nav class="navbar navbar-light navbar-expand-md bg-light navigation-clean">
       <div class="container">
-        <a class="navbar-brand" href="/">Ayush Goyal</a>
+        <a class="navbar-brand" href="/">parkMyCar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -25,7 +25,7 @@
           <li class="navbar-nav dropdown ">
             <a class="btn btn-primary ml-auto dropdown-toggle" role="button" data-toggle="dropdown" href="/accounts/login"> Login </a>
             <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="/accounts/login">Login</a>
+              <a class="dropdown-item" href="/operator/login">Login</a>
             </div>
           </li>
         </div>
@@ -42,10 +42,10 @@
 
               <div class="row">
                 <div class="col">
-                  <form method="post" action="/accounts/login">
+                  <form method="post" action="/operator/login">
                     <div id="div_id_login" class="form-group">
-                      <label for="id_login" class="col-form-label  requiredField"> E-mail<span class="asteriskField">*</span> </label>
-                      <div class=""><input type="email" name="login" placeholder="E-mail address" autofocus="autofocus" class="textinput textInput form-control" required id="id_login" /></div>
+                      <label for="id_login" class="col-form-label  requiredField"> Username<span class="asteriskField">*</span> </label>
+                      <div class=""><input type="text" name="username" placeholder="Username" autofocus="autofocus" class="textinput textInput form-control" required id="id_login" /></div>
                     </div>
                     <div id="div_id_password" class="form-group">
                       <label for="id_password" class="col-form-label  requiredField"> Password<span class="asteriskField">*</span> </label>
@@ -56,8 +56,9 @@
                     <button class="btn btn-success btn-block" type="submit">Sign In</button>
                   </form>
                   <br />
-                  <p><a href="/accounts/password/reset/">Forgot Password?</a></p>
-                  <p>Don't have an account? Please go to the <a href="/">Homepage and sign up</a> first.</p>
+                  <div class="text-center">
+                    <p>Don't have an account? Go to the <a href="/operator/signup">Homepage and Sign up</a></p>
+                  </div>
                 </div>
               </div>
             </main>

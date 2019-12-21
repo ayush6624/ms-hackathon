@@ -4,6 +4,7 @@ import pymongo
 import os
 from flask import Flask, render_template, url_for, send_from_directory, \
     request, session, redirect, flash
+from attendant import *
 
 app = Flask(__name__)
 a = os.environ.get("MONGO_URI")
@@ -27,6 +28,15 @@ def login_required(f):
 @login_required
 def secret():
     return session['email']
+
+
+@app.route('/attendant/signup', methods=['GET', 'POST'])
+def operator_signup():
+    '''Parking Interface'''
+    if request.method == 'GET':
+        return render_template('parkmycar.html')
+    else:
+        return "ok"
 
 
 @app.route('/')

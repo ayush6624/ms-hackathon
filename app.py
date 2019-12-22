@@ -11,6 +11,7 @@ from attendant import ParkingLot
 from map_my_india import geocode
 
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 # CORS(app)
 a = os.environ.get("MONGO_URI")
 b = os.environ.get("FLASK_SECRET_KEY")
@@ -23,6 +24,9 @@ s_lat = ''
 s_lon = ''
 e_lon = ''
 e_lat = ''
+p_name = ''
+p_available_spaces = 1
+p_cost_per_hour = 1
 
 
 def login_required(f):
@@ -77,13 +81,13 @@ def operator_signup():
             {'username': username, 'password': hashpass, 'latitude': latitude,
              'longitude': longitude, 'totalSpace': int(total_capacity),
              'available_space': int(total_capacity),
-             'cost_per_hour': cost_per_hour})
+             'cost_per_hour': cost_per_hour, 'address': address})
 
         global objectEndpoint
         objectEndpoint = json.dumps(operator.__dict__)
         print(objectEndpoint)
         # return objectEndpoint
-        return "DONNEEE"
+        return redirect('/operator/dashboard')
 
 
 @app.route('/operator/login', methods=['GET', 'POST'])
@@ -106,8 +110,32 @@ def login():
 
 
 @app.route('/public')
-def public():
+def public():  # name, available_spaces, cost_per_hour):
+    # global p_name
+    # global p_available_spaces
+    # global p_cost_per_hour
+
+    # , name=name, available_spaces=available_spaces, cost_per_hour=cost_per_hour)
     return render_template('public.html')
+
+
+@app.route('/booklater', methods=['GET', 'POST'])
+def mridul_a():
+    if request.method == 'POST':
+        a = request.get_data()
+        a = str(a)[2:-1]
+        a = (json.loads(a))
+        print(a)
+        global p_name
+        global p_available_spaces
+        global p_cost_per_hour
+
+        s_lat = a['current_latitude']
+        s_lon = a['current_longitude']
+        e_lat = a['latitude']
+        e_lon = a['longitude']
+        print(e_lon)
+        return "ok"
 
 
 @app.route('/list')
@@ -149,9 +177,19 @@ def route_temp():  # (s_lat=s_lat, s_lon=s_lon, e_lat=e_lat, e_lon=e_lon):
     return render_template('routing.html', s_lat=s_lat, s_lon=s_lon, e_lat=e_lat, e_lon=e_lon)
 
 
+@app.route('/form-booking')
+def form_booking():
+    global name
+    global available_spaces
+    global cost_per_hour
+
+    return render_template('bookingForm.html')
+
+
 @app.route('/coordinates', methods=['POST', 'GET'])
 def coordinates():
     if request.method == 'POST':
+        print('post request')
         a = request.get_data()
         a = str(a)[2:-1]
         a = (json.loads(a))
@@ -174,7 +212,7 @@ def coordinates():
 def logout():
     session.clear()
     flash("Successfully Logged out")
-    return redirect(url_for('index'))
+    return redirect(url_for('/'))
 
 
 @app.errorhandler(500)

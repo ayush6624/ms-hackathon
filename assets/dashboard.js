@@ -12,7 +12,7 @@ add.addEventListener('click', function() {
     add.style.background = 'yellow';
     subtract.style.background = 'white';
 
-    var Url = 'http://localhost:5000/operator/add';
+    var Url = 'https://ms.goyal.club/operator/add';
     var xhr = new XMLHttpRequest();
     xhr.open('POST', Url, true);
     xhr.send('hello');
@@ -31,7 +31,7 @@ subtract.addEventListener('click', function() {
     number.textContent = number1;
     subtract.style.background = 'yellow';
     add.style.background = 'white';
-    var Url = 'http://localhost:5000/operator/subtract';
+    var Url = 'https://ms.goyal.club/operator/subtract';
     var xhr = new XMLHttpRequest();
     xhr.open('POST', Url, true);
     xhr.send('OK');

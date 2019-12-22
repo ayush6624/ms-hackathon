@@ -8,6 +8,8 @@
 
 // var parkingLots =['aaa'];//= [[28.61, 77.23],[28.65, 77.19]];
 
+console.log('script connected');
+
 var HttpClient = function() {
   this.get = function(aUrl, aCallback) {
     var anHttpRequest = new XMLHttpRequest();
@@ -110,7 +112,8 @@ client.get(theurl, response => {
     // x = JSON.parse(x);
     x = JSON.stringify(x);
     // var Url = "10.104.201.255:5000/coordinates"
-    var Url = 'https://ms.goyal.club/coordinates';
+    // var Url = 'https://ms.goyal.club/coordinates';
+    var Url = 'localhost:5000/coordinates';
     var xhr = new XMLHttpRequest();
     xhr.open('POST', Url, true);
     xhr.send(x);

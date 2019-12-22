@@ -212,7 +212,7 @@ def coordinates():
 def logout():
     session.clear()
     flash("Successfully Logged out")
-    return redirect(url_for('/'))
+    return redirect('/')
 
 
 @app.errorhandler(500)

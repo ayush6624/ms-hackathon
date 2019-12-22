@@ -163,4 +163,27 @@ client.get(theurl, response => {
   //         title:"Hi"
   //     });
   // });
+
+  document.querySelector('#sbookLater').addEventListener('click', () => {
+    selectedObj['current_latitude'] = current_latitude;
+    selectedObj['current_longitude'] = current_longitude;
+
+    var x = selectedObj;
+    console.log(selectedObj['current_latitude']);
+
+    // x = JSON.parse(x);
+    x = JSON.stringify(x);
+    // var Url = "10.104.201.255:5000/coordinates"
+    var Url = 'https://ms.goyal.club/booklater';
+    // var Url = 'localhost:5000/coordinates';
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', Url, true);
+    xhr.send(x);
+    xhr.onreadystatechange = processRequest;
+    function processRequest(e) {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        console.log('Done');
+      }
+    }
+  });
 });

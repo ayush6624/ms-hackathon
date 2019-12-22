@@ -42,7 +42,7 @@ client.get(theurl, response => {
     // console.log(typeof parkingLots[index].latitude);
     var mk = addMarker({
       position: [parkingLots[index].latitude, parkingLots[index].longitude],
-      title: 'hi',
+      title: parkingLots[index].address,
       draggable: false,
       icon: icon,
       obj: parkingLots[index]
@@ -74,7 +74,7 @@ client.get(theurl, response => {
       title: req.title
     });
     // mk.bindPopup(req.title);
-    var content = create_content('Info', 'Available space: ' + req.obj.available_space + '<br>' + 'Cost/hr: ' + req.obj.cost_per_hour);
+    var content = create_content(req.obj.address, 'Available space: ' + req.obj.available_space + '<br>' + 'Cost/hr: ' + req.obj.cost_per_hour);
     mk.bindPopup(content);
     mk.on('click', () => {
       selectedObj = req.obj;

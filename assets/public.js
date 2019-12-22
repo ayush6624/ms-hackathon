@@ -33,7 +33,7 @@ client.get(theurl, response => {
   // alert(window.parkingLots);
   var map = new MapmyIndia.Map('mainMap', { center: [28.61, 77.23], zoomControl: true, hybrid: true, search: true, location: true }); /*map initialized*/
 
-  map.setZoom(11);
+  map.setZoom(12);
   for (var index = 0; index < parkingLots.length; index++) {
     var icon = L.divIcon({
       className: 'my-div-icon',
@@ -103,24 +103,27 @@ client.get(theurl, response => {
     console.log('Latitude: ' + position.coords.latitude + 'Longitude: ' + position.coords.longitude);
   }
   document.querySelector('#show-route').addEventListener('click', () => {
-    selectedObj['current_latitude'] = current_latitude;
-    selectedObj['current_longitude'] = current_longitude;
+    if (selected == undefined) alert('Please select a pin');
+    else {
+      selectedObj['current_latitude'] = current_latitude;
+      selectedObj['current_longitude'] = current_longitude;
 
-    var x = selectedObj;
-    console.log(selectedObj['current_latitude']);
+      var x = selectedObj;
+      console.log(selectedObj['current_latitude']);
 
-    // x = JSON.parse(x);
-    x = JSON.stringify(x);
-    // var Url = "10.104.201.255:5000/coordinates"
-    var Url = 'https://ms.goyal.club/coordinates';
-    // var Url = 'localhost:5000/coordinates';
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', Url, true);
-    xhr.send(x);
-    xhr.onreadystatechange = processRequest;
-    function processRequest(e) {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        console.log('Done');
+      // x = JSON.parse(x);
+      x = JSON.stringify(x);
+      // var Url = "10.104.201.255:5000/coordinates"
+      var Url = 'https://ms.goyal.club/coordinates';
+      // var Url = 'localhost:5000/coordinates';
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', Url, true);
+      xhr.send(x);
+      xhr.onreadystatechange = processRequest;
+      function processRequest(e) {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          console.log('Done');
+        }
       }
     }
   });

@@ -1,11 +1,9 @@
 from functools import wraps
-from datetime import datetime, timedelta
 import pymongo
 import os
-import json
 import bcrypt
 import simplejson as json
-from flask import Flask, render_template, url_for, send_from_directory, \
+from flask import Flask, render_template, send_from_directory, \
     request, session, redirect, flash, jsonify
 from attendant import ParkingLot
 from map_my_india import geocode
@@ -115,7 +113,7 @@ def public():  # name, available_spaces, cost_per_hour):
     # global p_available_spaces
     # global p_cost_per_hour
 
-    # , name=name, available_spaces=available_spaces, cost_per_hour=cost_per_hour)
+    # name=name, available_spaces=available_spaces,cost_per_hour=cost_per_hour)
     return render_template('public.html')
 
 
@@ -174,7 +172,8 @@ def route_temp():  # (s_lat=s_lat, s_lon=s_lon, e_lat=e_lat, e_lon=e_lon):
     global s_lon
     global e_lon
     global e_lat
-    return render_template('routing.html', s_lat=s_lat, s_lon=s_lon, e_lat=e_lat, e_lon=e_lon)
+    return render_template('routing.html', s_lat=s_lat,
+                           s_lon=s_lon, e_lat=e_lat, e_lon=e_lon)
 
 
 @app.route('/form-booking')
@@ -231,7 +230,9 @@ def dashboard(available_spaces=100, total_space=110):
     users = mongo.parking.lot
     user = session['username']
     a = users.find_one({"username": user})
-    return render_template('dashboard.html', available_spaces=a['available_space'], total_space=a['totalSpace'])
+    return render_template('dashboard.html',
+                           available_spaces=a['available_space'],
+                           total_space=a['totalSpace'])
 
 
 @app.route('/operator/add', methods=['POST'])

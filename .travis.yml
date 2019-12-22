@@ -6,4 +6,4 @@ install:
   - pip install -U pytest
   - pip install flake8
 script:
-  - flake8 . --ignore F401,F841
+  - flake8 . --ignore F401,F841,F841

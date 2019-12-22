@@ -75,8 +75,8 @@ def operator_signup():
         print('================================================')
         users.insert(
             {'username': username, 'password': hashpass, 'latitude': latitude,
-             'longitude': longitude, 'totalSpace': total_capacity,
-             'available_space': total_capacity,
+             'longitude': longitude, 'totalSpace': int(total_capacity),
+             'available_space': int(total_capacity),
              'cost_per_hour': cost_per_hour})
 
         global objectEndpoint
@@ -189,8 +189,35 @@ def not_found(e):
 
 @app.route('/operator/dashboard')
 @login_required
-def dashboard():
-    return render_template('dashboard.html')
+def dashboard(available_spaces=100, total_space=110):
+    users = mongo.parking.lot
+    user = session['username']
+    a = users.find_one({"username": user})
+    return render_template('dashboard.html', available_spaces=a['available_space'], total_space=a['totalSpace'])
+
+
+@app.route('/operator/add', methods=['POST'])
+def space_add():
+    users = mongo.parking.lot
+    user = session['username']
+    a = users.find_one({"username": user})
+    users.update(
+        {"username": user},
+        {"$inc": {'available_space': 1}}
+    )
+    return "ok"
+
+
+@app.route('/operator/subtract', methods=['POST'])
+def space_minus():
+    users = mongo.parking.lot
+    user = session['username']
+    a = users.find_one({"username": user})
+    users.update(
+        {"username": user},
+        {"$inc": {'available_space': -1}}
+    )
+    return "ok"
 
 
 if __name__ == "__main__":

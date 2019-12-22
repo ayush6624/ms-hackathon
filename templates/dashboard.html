@@ -17,7 +17,7 @@
   <body>
     <nav class="navbar navbar-light navbar-expand-md bg-light navigation-clean">
       <div class="container">
-        <a class="navbar-brand" href="/">Ayush Goyal</a>
+        <a class="navbar-brand" href="/">parkMyCar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -44,12 +44,15 @@
         }
       </style>
       <body>
-        <h1>Welcome To Your Parking Base</h1>
-        <h2>Your Parking Name</h2>
-        <h3>Total Number of Vacant spaces : <span id="number"> 145 </span></h3>
-        <button id="add">Add Vacant Spaces</button>
-        <button id="subtract">Subtract Occupied Spaces</button>
-        <p><a href="loginform.html">Log Out</a></p>
+        <div class="text-center">
+          <h1>Welcome To Your Parking Base</h1>
+          <h2>Your Parking Name</h2>
+          <h3>Total Number of Vacant spaces : <span id="number"> {{ available_spaces }} </span></h3>
+          <h3>Total Number of Spaces : <span id="total"> {{ total_space }} </span></h3>
+          <button id="add">Add Vacant Spaces</button>
+          <button id="subtract">Subtract Occupied Spaces</button>
+          <p><a href="/operator/logout">Log Out</a></p>
+        </div>
       </body>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

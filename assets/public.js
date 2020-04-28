@@ -10,10 +10,10 @@
 
 console.log('script connected');
 
-var HttpClient = function() {
-  this.get = function(aUrl, aCallback) {
+var HttpClient = function () {
+  this.get = function (aUrl, aCallback) {
     var anHttpRequest = new XMLHttpRequest();
-    anHttpRequest.onreadystatechange = function() {
+    anHttpRequest.onreadystatechange = function () {
       if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200) aCallback(anHttpRequest.responseText);
     };
     anHttpRequest.open('GET', aUrl, true);
@@ -21,11 +21,11 @@ var HttpClient = function() {
   };
 };
 
-// var theurl = 'https://ms.goyal.club/list';
-var theurl = 'https://ms.goyal.club/list';
+// var theurl = 'https://ms.ayushgoyal.dev/list';
+var theurl = 'https://ms.ayushgoyal.dev/list';
 
 var client = new HttpClient();
-client.get(theurl, response => {
+client.get(theurl, (response) => {
   // alert(window.parkingLots);
   var selectedObj = undefined;
   window.parkingLots = JSON.parse(response);
@@ -39,7 +39,7 @@ client.get(theurl, response => {
       className: 'my-div-icon',
       html: "<img class='popper'  src=" + "'https://maps.mapmyindia.com/images/2.png'>" + '<span class="my-div-span">' + (index + 1) + '</span>',
       iconSize: [10, 10],
-      popupAnchor: [12, -10]
+      popupAnchor: [12, -10],
     });
     // console.log(typeof parkingLots[index].latitude);
     var mk = addMarker({
@@ -47,7 +47,7 @@ client.get(theurl, response => {
       title: parkingLots[index].address,
       draggable: false,
       icon: icon,
-      obj: parkingLots[index]
+      obj: parkingLots[index],
     });
   }
 
@@ -73,7 +73,7 @@ client.get(theurl, response => {
     var mk = new L.marker(req.position, {
       draggable: req.draggable,
       icon: req.icon,
-      title: req.title
+      title: req.title,
     });
     // mk.bindPopup(req.title);
     var content = create_content(req.obj.address, 'Available space: ' + req.obj.available_space + '<br>' + 'Cost/hr: ' + req.obj.cost_per_hour);
@@ -114,7 +114,7 @@ client.get(theurl, response => {
       // x = JSON.parse(x);
       x = JSON.stringify(x);
       // var Url = "10.104.201.255:5000/coordinates"
-      var Url = 'https://ms.goyal.club/coordinates';
+      var Url = 'https://ms.ayushgoyal.dev/coordinates';
       // var Url = 'localhost:5000/coordinates';
       var xhr = new XMLHttpRequest();
       xhr.open('POST', Url, true);
@@ -167,26 +167,26 @@ client.get(theurl, response => {
   //     });
   // });
 
-  document.querySelector('#sbookLater').addEventListener('click', () => {
-    selectedObj['current_latitude'] = current_latitude;
-    selectedObj['current_longitude'] = current_longitude;
+  // document.querySelector('#sbookLater').addEventListener('click', () => {
+  //   selectedObj['current_latitude'] = current_latitude;
+  //   selectedObj['current_longitude'] = current_longitude;
 
-    var x = selectedObj;
-    console.log(selectedObj['current_latitude']);
+  //   var x = selectedObj;
+  //   console.log(selectedObj['current_latitude']);
 
-    // x = JSON.parse(x);
-    x = JSON.stringify(x);
-    // var Url = "10.104.201.255:5000/coordinates"
-    var Url = 'https://ms.goyal.club/booklater';
-    // var Url = 'localhost:5000/coordinates';
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', Url, true);
-    xhr.send(x);
-    xhr.onreadystatechange = processRequest;
-    function processRequest(e) {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        console.log('Done');
-      }
-    }
-  });
+  //   // x = JSON.parse(x);
+  //   x = JSON.stringify(x);
+  //   // var Url = "10.104.201.255:5000/coordinates"
+  //   var Url = 'https://ms.ayushgoyal.dev/booklater';
+  //   // var Url = 'localhost:5000/coordinates';
+  //   var xhr = new XMLHttpRequest();
+  //   xhr.open('POST', Url, true);
+  //   xhr.send(x);
+  //   xhr.onreadystatechange = processRequest;
+  //   function processRequest(e) {
+  //     if (xhr.readyState == 4 && xhr.status == 200) {
+  //       console.log('Done');
+  //     }
+  //   }
+  // });
 });

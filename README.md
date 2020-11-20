@@ -19,5 +19,5 @@ It also helps the client (user) to find the shortest route to the destination on
 Team Members are   
 - Ayush Goyal
 - Mridul Chaturvedi
-- Gaurav Dawra
+- Gaurav Dawra - gaurav19039@iiitd.ac.in
 - Rhitvik Sinha
